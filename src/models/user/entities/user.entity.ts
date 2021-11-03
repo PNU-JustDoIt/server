@@ -11,23 +11,26 @@ import { UserBase } from '../interfaces/user-base.interface';
 })
 export class User implements UserBase {
   @PrimaryGeneratedColumn()
-  userId: number;
+  user_id: number;
 
-  @Column({ type: 'char', length: 255 })
-  email: string;
+  @Column({ type: 'char', length: 255, nullable: false })
+  user_email: string;
 
-  @Column({ type: 'char', length: 10 })
-  name: string;
+  @Column({ type: 'char', length: 30, nullable: false })
+  user_password: string;
 
-  @Column({ type: 'char', length: 10 })
-  nickName: string;
+  @Column({ type: 'char', length: 10, nullable: false })
+  user_name: string;
 
-  @Column()
-  gender: GenderType;
+  @Column({ type: 'char', length: 10, nullable: false })
+  user_nickname: string;
 
-  @Column({ type: 'date' })
-  birthday: Date;
+  @Column({ nullable: false })
+  user_gender: GenderType;
 
-  @Column({ type: 'char', length: 13 })
-  phone: string;
+  @Column({ type: 'date', nullable: false })
+  user_birthday: Date;
+
+  @Column({ type: 'char', length: 13, nullable: false })
+  user_phone: string;
 }
