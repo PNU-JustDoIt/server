@@ -12,7 +12,7 @@ export class UserController {
    * @param userData
    * @returns CreateUserRes
    */
-  @Post('/create-local-user')
+  @Post('create-local-user')
   async createLocalUser(
     @Body() userData: CreateUserReq,
   ): Promise<CreateUserRes> {
