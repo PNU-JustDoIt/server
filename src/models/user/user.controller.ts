@@ -18,4 +18,32 @@ export class UserController {
   ): Promise<CreateUserRes> {
     return await this.userService.createLocalUser(userData);
   }
+
+  /**
+   * user_email 중복 여부 반환
+   * @param user_email
+   * @returns boolean;
+   *  1. 중복 이메일인 경우 -> return false;
+   *  2. 사용 가능한 이메일인 경우 -> return true;
+   */
+  @Post('email-dup-check')
+  async userEmailDupCheck(
+    @Body('user_email') user_email: string,
+  ): Promise<boolean> {
+    return await this.userService.userEmailDupCheck(user_email);
+  }
+
+  /**
+   * user_nickname 중복 여부 반환
+   * @param user_nickname
+   * @returns boolean;
+   *  1. 중복 닉네임인 경우 -> return false;
+   *  2. 사용 가능한 닉네임인 경우 -> return true;
+   */
+  @Post('nickname-dup-check')
+  async userNicknameDupCheck(
+    @Body('user_nickname') user_nickname: string,
+  ): Promise<boolean> {
+    return await this.userService.userNicknameDupCheck(user_nickname);
+  }
 }
