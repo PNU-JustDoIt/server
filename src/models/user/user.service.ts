@@ -26,10 +26,7 @@ export class UserService {
       // 중복된 user_email 이 존재하지 않는 경우 -> 생성
       try {
         const user = await this.userRepository.create({
-          user_birthday: userData.user_birthday,
           user_email: userData.user_email,
-          user_gender: userData.user_gender,
-          user_name: userData.user_name,
           user_nickname: userData.user_nickname,
           user_password: userData.user_password,
           user_phone: userData.user_phone,
