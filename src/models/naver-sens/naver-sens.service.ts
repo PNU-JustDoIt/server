@@ -30,10 +30,11 @@ export class NaverSensService {
      * authentication number 생성부
      */
     let AUTHENTICATION_NUMBER = '';
-
     for (let i = 0; i < 4; i += 1) {
       AUTHENTICATION_NUMBER += Math.floor(Math.random() * 10);
     }
+
+    const url = `https://sens.apigw.ntruss.com/sms/v2/services/${process.env.smsServiceId}/messages`;
 
     const body = {
       type: 'SMS',
@@ -57,17 +58,20 @@ export class NaverSensService {
       },
     };
 
-    axios
-      .post(
-        `https://sens.apigw.ntruss.com/sms/v2/services/${process.env.smsServiceId}/messages`,
-        body,
-        options,
-      )
+    await axios
+      .post(url, body, options)
       .then(async (res) => {
-        console.log('[sendSMS] res:', res.data);
+        console.log('[sendSMS then] res.data:', res.data);
+        console.log(
+          '[sendSMS then] AUTHENTICATION_NUMBER:',
+          AUTHENTICATION_NUMBER,
+        );
       })
       .catch((err) => {
-        console.log('[sendSMS] res:', err);
+        console.log('[sendSMS catch] err:', err.response.data);
+        throw new Error(
+          `[sendSMS Error] Failed to issue authentication number and send SMS.`,
+        );
       });
 
     return AUTHENTICATION_NUMBER.toString();
