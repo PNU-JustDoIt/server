@@ -97,6 +97,15 @@ export class UserService {
     else return true;
   }
 
+  async findUserIdByUserPhone(user_phone: string): Promise<string> {
+    const user = await this.userRepository.findOne({
+      user_phone: user_phone,
+    });
+
+    if (user && user !== null) return user.user_email;
+    return null;
+  }
+
   /**
    * user_email 을 통한 User 조회
    * @param user_email

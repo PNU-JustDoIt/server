@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
 import { UserService } from './user.service';
@@ -45,5 +45,12 @@ export class UserController {
     @Body('user_nickname') user_nickname: string,
   ): Promise<boolean> {
     return await this.userService.userNicknameDupCheck(user_nickname);
+  }
+
+  @Get('find-userid-by-userphone/:user_phone')
+  async findUserIdByUserPhone(
+    @Param('user_phone') user_phone: string,
+  ): Promise<string> {
+    return await this.userService.findUserIdByUserPhone(user_phone);
   }
 }
