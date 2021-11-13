@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
+import { DeleteUserRes } from './dto/delete-user-res.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -60,6 +61,30 @@ export class UserService {
           `[createLocalUser Error] users of duplicate user_nickname: ${userData.user_nickname}`,
         );
       }
+    }
+  }
+
+  /**
+   * Local User 삭제
+   * @param user_email
+   * @returns DeleteUserRes
+   */
+  async deleteLocalUser(user_email: string): Promise<DeleteUserRes> {
+    const user = await this.userRepository.findOne({ user_email: user_email });
+
+    if (user && user !== null) {
+      try {
+        const { user_password, ...res } = await this.userRepository.remove(
+          user,
+        );
+        return res;
+      } catch (err) {
+        throw new Error('[deleteLocalUser Error] deletion error');
+      }
+    } else {
+      throw new Error(
+        `[deleteLocalUser Error] no user was found by user_email: ${user_email}`,
+      );
     }
   }
 

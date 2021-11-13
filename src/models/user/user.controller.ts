@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
+import { DeleteUserRes } from './dto/delete-user-res.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -17,6 +18,18 @@ export class UserController {
     @Body() userData: CreateUserReq,
   ): Promise<CreateUserRes> {
     return await this.userService.createLocalUser(userData);
+  }
+
+  /**
+   * Local User 삭제
+   * @param user_email
+   * @returns DeleteUserRes
+   */
+  @Delete('delete-local-user/:user_email')
+  async deleteLocalUser(
+    @Param('user_email') user_email: string,
+  ): Promise<DeleteUserRes> {
+    return await this.userService.deleteLocalUser(user_email);
   }
 
   /**
