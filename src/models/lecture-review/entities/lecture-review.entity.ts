@@ -19,6 +19,8 @@ export class LectureReview implements LectureReviewBase {
   @JoinColumn()
   lecture_id: Lecture;
 
+  user_id: number;
+
   // @ManyToOne(()=> )
   // @JoinColumn()
   // user_id: number;
