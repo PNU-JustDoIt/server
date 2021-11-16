@@ -1,8 +1,10 @@
 import { userInfo } from 'os';
 import { CertifiedImage } from 'src/models/certified-image/entities/certified-image.entity';
 import { Lecture } from 'src/models/lecture/entities/lecture.entity';
+import { User } from 'src/models/user/entities/user.entity';
 import {
   Column,
+  Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -11,6 +13,7 @@ import {
 } from 'typeorm';
 import { LectureReviewBase } from '../interfaces/review.interface';
 
+@Entity({ name: 'lecture-review' })
 export class LectureReview implements LectureReviewBase {
   @PrimaryGeneratedColumn()
   review_id: number;
@@ -19,7 +22,8 @@ export class LectureReview implements LectureReviewBase {
   @JoinColumn()
   lecture_id: Lecture;
 
-  user_id: number;
+  @ManyToOne(() => User, (user) => user.lecture_review_id)
+  user_id: User;
 
   // @ManyToOne(()=> )
   // @JoinColumn()
