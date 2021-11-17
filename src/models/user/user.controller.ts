@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ChangeUserNicknameReq } from './dto/change-user-nickname-req.dto';
+import { ChangeUserPasswordReq } from './dto/change-user-password-req.dto';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
 import { DeleteUserRes } from './dto/delete-user-res.dto';
@@ -30,6 +40,20 @@ export class UserController {
     @Param('user_email') user_email: string,
   ): Promise<DeleteUserRes> {
     return await this.userService.deleteLocalUser(user_email);
+  }
+
+  @Put('change-user-password')
+  async changeUserPassword(
+    @Body() userData: ChangeUserPasswordReq,
+  ): Promise<boolean> {
+    return await this.userService.changeUserPassword(userData);
+  }
+
+  @Put('change-user-nickname')
+  async changeUserNickname(
+    @Body() userData: ChangeUserNicknameReq,
+  ): Promise<boolean> {
+    return await this.userService.changeUserNickname(userData);
   }
 
   /**

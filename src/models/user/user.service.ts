@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ChangeUserNicknameReq } from './dto/change-user-nickname-req.dto';
+import { ChangeUserPasswordReq } from './dto/change-user-password-req.dto';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
 import { DeleteUserRes } from './dto/delete-user-res.dto';
@@ -88,6 +90,71 @@ export class UserService {
     }
   }
 
+  async changeUserPassword(userData: ChangeUserPasswordReq): Promise<boolean> {
+    const { current_password, new_password, user_email } = userData;
+
+    const user = await this.userRepository.findOne({ user_email: user_email });
+
+    if (user && user.user_password === current_password) {
+      try {
+        await this.userRepository
+          .createQueryBuilder('user')
+          .update(User)
+          .where('user.user_email=:user_email', {
+            user_email: user_email,
+          })
+          .set({
+            ...user,
+            user_password: new_password,
+          })
+          .execute();
+      } catch {
+        throw new Error(
+          `[changeUserPassword Error] change user_password error by user_email: ${user_email}`,
+        );
+      }
+    } else {
+      throw new Error(
+        `[changeUserPassword Error] user_password does not match.`,
+      );
+    }
+
+    return true;
+  }
+
+  async changeUserNickname(userData: ChangeUserNicknameReq): Promise<boolean> {
+    const { user_email, new_nickname } = userData;
+
+    const user = await this.userRepository.findOne({ user_email: user_email });
+    const isUsable = await this.userNicknameDupCheck(new_nickname);
+
+    if (user && isUsable) {
+      try {
+        await this.userRepository
+          .createQueryBuilder('user')
+          .update(User)
+          .where('user.user_email=:user_email', {
+            user_email: user_email,
+          })
+          .set({
+            ...user,
+            user_nickname: new_nickname,
+          })
+          .execute();
+      } catch {
+        throw new Error(
+          `[changeUserNickname Error] change user_nickname error by user_email: ${user_email}`,
+        );
+      }
+    } else {
+      throw new Error(
+        `[changeUserPassword Error] user_nickname: ${new_nickname} already in use.`,
+      );
+    }
+
+    return true;
+  }
+
   /**
    * user_email 중복 여부 반환
    * @param user_email
@@ -116,8 +183,6 @@ export class UserService {
       user_nickname: user_nickname,
     });
 
-    console.log(user_nickname);
-
     if (user && user !== null) return false;
     else return true;
   }
@@ -145,7 +210,6 @@ export class UserService {
 
     if (user) {
       const { user_password, ...res } = user;
-      console.log(res);
       return res;
     }
 
