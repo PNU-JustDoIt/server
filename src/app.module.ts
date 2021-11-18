@@ -1,3 +1,4 @@
+import { LectureReviewModule } from './models/lecture-review/lecture-review.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -8,7 +9,7 @@ import { UserModule } from './models/user/user.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(), AuthModule, UserModule, NaverSensModule],
-  controllers: [AppController],
+  controllers: [AppController, LectureReviewModule],
   providers: [AppService],
 })
 export class AppModule {}
