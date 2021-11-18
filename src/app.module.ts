@@ -8,8 +8,14 @@ import { NaverSensModule } from './models/naver-sens/naver-sens.module';
 import { UserModule } from './models/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), AuthModule, UserModule, NaverSensModule],
-  controllers: [AppController, LectureReviewModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    AuthModule,
+    UserModule,
+    NaverSensModule,
+    LectureReviewModule,
+  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
