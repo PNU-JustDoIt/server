@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './models/auth/auth.module';
 import { NaverSensModule } from './models/naver-sens/naver-sens.module';
 import { UserModule } from './models/user/user.module';
+import { CertifiedImageModule } from './models/certified-image/certified-image.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './models/user/user.module';
     UserModule,
     NaverSensModule,
     LectureReviewModule,
+    CertifiedImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

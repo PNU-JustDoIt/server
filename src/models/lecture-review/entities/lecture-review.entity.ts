@@ -17,16 +17,17 @@ export class LectureReview implements LectureReviewBase {
   @PrimaryGeneratedColumn()
   review_id: number;
 
-  @OneToOne(() => Lecture, (lecture) => lecture.review)
-  @JoinColumn()
+  @OneToOne(() => Lecture)
+  @JoinColumn({ name: 'lecture_id' })
   lecture_id: Lecture;
 
-  @ManyToOne(() => User, (user) => user.lecture_review_id)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user_id: User;
 
-  // @ManyToOne(()=> )
-  // @JoinColumn()
-  // user_id: number;
+  @OneToOne(() => CertifiedImage)
+  @JoinColumn({ name: 'certified_image_id' })
+  certifiedImage: CertifiedImage;
 
   @Column({ type: 'varchar', nullable: false })
   review_description: string;
@@ -51,8 +52,4 @@ export class LectureReview implements LectureReviewBase {
 
   @Column({ type: 'varchar' })
   review_test_category: string;
-
-  @JoinColumn()
-  @OneToOne(() => CertifiedImage, (certifiedImage) => certifiedImage.review_id)
-  certifiedImage: CertifiedImage;
 }

@@ -31,7 +31,7 @@ import { CertifiedImage } from 'src/models/certified-image/entities/certified-im
           Lecture,
           CertifiedImage,
         ],
-        synchronize: false,
+        synchronize: true,
       }),
       inject: [MysqlConfigService],
     } as TypeOrmModuleAsyncOptions),
