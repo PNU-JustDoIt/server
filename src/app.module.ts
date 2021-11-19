@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LectureController } from './lecture/lecture.controller';
-import { LectureModule } from './lecture/lecture.module';
-import { LectureService } from './lecture/lecture.service';
-import { LectureController } from './lecture/lecture.controller';
+import { LectureController } from './models/lecture/lecture.controller';
+import { LectureModule } from './models/lecture/lecture.module';
+import { LectureService } from './models/lecture/lecture.service';
+
+
 
 @Module({
   imports: [LectureModule],
