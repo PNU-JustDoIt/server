@@ -11,6 +11,12 @@ export class LectureService {
   ) {}
 
   async findOneById(id: number) {
-    return this.lectureRepository.findOne(id);
+    const result = await this.lectureRepository.find();
+    console.log('find lecture', result);
+    return result[0];
+  }
+
+  async findAll() {
+    return this.lectureRepository.find();
   }
 }

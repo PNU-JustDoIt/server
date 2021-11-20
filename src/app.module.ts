@@ -7,9 +7,11 @@ import { AuthModule } from './models/auth/auth.module';
 import { NaverSensModule } from './models/naver-sens/naver-sens.module';
 import { UserModule } from './models/user/user.module';
 import { CertifiedImageModule } from './models/certified-image/certified-image.module';
+import { MysqlDatabaseProviderModule } from './providers/mysql/provider.module';
 
 @Module({
   imports: [
+    MysqlDatabaseProviderModule,
     TypeOrmModule.forRoot(),
     AuthModule,
     UserModule,

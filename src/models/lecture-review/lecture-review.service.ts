@@ -24,12 +24,17 @@ export class LectureReviewService {
   ): Promise<LectureReview> {
     const lectureReview = new LectureReview();
 
+    console.log(reviewData);
+
     lectureReview.lecture_id = await this.lectureService.findOneById(
       reviewData.lecture_id,
     );
     lectureReview.user_id = await this.userService.findOneById(
       reviewData.user_id,
     );
+
+    console.log(await this.lectureService.findOneById(reviewData.lecture_id));
+    console.log(await this.userService.findOneById(reviewData.user_id));
 
     if (!lectureReview.lecture_id || !lectureReview.user_id) {
       throw new HttpException(
@@ -59,6 +64,13 @@ export class LectureReviewService {
     lectureReview.review_sub_test_count = reviewData.review_sub_test_count;
     lectureReview.review_test_category = reviewData.review_test_category;
 
-    return this.lectureReviewRepository.save(lectureReview);
+    try {
+      return this.lectureReviewRepository.save(lectureReview);
+    } catch {
+      throw new HttpException(
+        '[createLectureReview Error] lecture-review 생성에 실패함.',
+        500,
+      );
+    }
   }
 }
