@@ -59,6 +59,13 @@ export class LectureReviewService {
     lectureReview.review_sub_test_count = reviewData.review_sub_test_count;
     lectureReview.review_test_category = reviewData.review_test_category;
 
-    return this.lectureReviewRepository.save(lectureReview);
+    try {
+      return this.lectureReviewRepository.save(lectureReview);
+    } catch {
+      throw new HttpException(
+        '[createLectureReview Error] lecture-review 생성에 실패함.',
+        500,
+      );
+    }
   }
 }

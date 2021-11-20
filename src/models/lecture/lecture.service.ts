@@ -13,4 +13,8 @@ export class LectureService {
   async findOneById(id: number) {
     return this.lectureRepository.findOne(id);
   }
+
+  async findAll() {
+    return this.lectureRepository.find();
+  }
 }
