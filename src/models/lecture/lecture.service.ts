@@ -43,4 +43,11 @@ export class LectureService {
     //return this.lectureRepository.find();
     return Lecture;
   }
+  async findOneById(id: number) {
+    return this.lectureRepository.findOne(id);
+  }
+
+  async findAll() {
+    return this.lectureRepository.find();
+  }
 }

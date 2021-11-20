@@ -1,5 +1,11 @@
 import { LectureReview } from 'src/models/lecture-review/entities/lecture-review.entity';
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserBase } from '../interfaces/user-base.interface';
 
 /**
@@ -25,7 +31,7 @@ export class User implements UserBase {
   @Column({ type: 'char', length: 13, nullable: false })
   user_phone: string;
 
-  @OneToMany(()=> LectureReview, (lecture_review)=> lecture_review.user_id)
+  @OneToMany(() => LectureReview, (lecture_review) => lecture_review.user_id)
   @JoinColumn()
   lecture_review_id: LectureReview;
 }
