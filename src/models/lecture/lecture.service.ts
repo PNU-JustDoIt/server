@@ -11,9 +11,7 @@ export class LectureService {
   ) {}
 
   async findOneById(id: number) {
-    const result = await this.lectureRepository.find();
-    console.log('find lecture', result);
-    return result[0];
+    return this.lectureRepository.findOne(id);
   }
 
   async findAll() {
