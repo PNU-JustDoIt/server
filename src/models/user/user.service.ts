@@ -196,6 +196,10 @@ export class UserService {
     return null;
   }
 
+  async findOneById(id: number): Promise<User> {
+    return this.userRepository.findOne(id);
+  }
+
   /**
    * user_email 을 통한 User 조회
    * @param user_email

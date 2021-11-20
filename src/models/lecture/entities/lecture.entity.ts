@@ -1,11 +1,4 @@
-import { LectureReview } from 'src/models/lecture-review/entities/lecture-review.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { LectureBase } from '../interfaces/lectureBase.interface';
 
 @Entity({ name: 'lecture' })
@@ -66,8 +59,4 @@ export class Lecture implements LectureBase {
 
   @Column({ type: 'varchar', nullable: false })
   lecture_time_table: string;
-
-  @OneToOne(() => LectureReview, (review) => review.lecture_id)
-  @JoinColumn()
-  review: LectureReview;
 }

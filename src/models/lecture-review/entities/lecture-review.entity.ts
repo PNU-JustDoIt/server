@@ -1,4 +1,3 @@
-import { userInfo } from 'os';
 import { CertifiedImage } from 'src/models/certified-image/entities/certified-image.entity';
 import { Lecture } from 'src/models/lecture/entities/lecture.entity';
 import { User } from 'src/models/user/entities/user.entity';
@@ -7,7 +6,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -16,18 +14,19 @@ import { LectureReviewBase } from '../interfaces/review.interface';
 @Entity({ name: 'lecture-review' })
 export class LectureReview implements LectureReviewBase {
   @PrimaryGeneratedColumn()
-  review_id: number;
+  review_id!: number;
 
-  @OneToOne(() => Lecture, (lecture) => lecture.review)
-  @JoinColumn()
+  @OneToOne(() => Lecture)
+  @JoinColumn({ name: 'lecture_id' })
   lecture_id: Lecture;
 
-  @ManyToOne(() => User, (user) => user.lecture_review_id)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user_id: User;
 
-  // @ManyToOne(()=> )
-  // @JoinColumn()
-  // user_id: number;
+  @OneToOne(() => CertifiedImage)
+  @JoinColumn({ name: 'certified_image_id' })
+  certifiedImage: CertifiedImage;
 
   @Column({ type: 'varchar', nullable: false })
   review_description: string;
@@ -52,8 +51,4 @@ export class LectureReview implements LectureReviewBase {
 
   @Column({ type: 'varchar' })
   review_test_category: string;
-
-  @JoinColumn()
-  @OneToOne(() => CertifiedImage, (certifiedImage) => certifiedImage.review_id)
-  certifiedImage: CertifiedImage;
 }
