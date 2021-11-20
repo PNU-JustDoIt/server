@@ -5,8 +5,10 @@ import { HttpException, Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateLectureReviewReq } from './dtos/create-lecture-review.dto';
+import { CreateLectureReviewReq } from './dto/create-lecture-review.dto';
 import { LectureReview } from './entities/lecture-review.entity';
+
+import { FindLectureReviewDetail } from './dto/find-lecture-review-detail.dto';
 
 @Injectable()
 export class LectureReviewService {
@@ -67,5 +69,16 @@ export class LectureReviewService {
         500,
       );
     }
+  }
+
+  async lectureReviewFindOne(id: number): Promise<FindLectureReviewDetail> {
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
+      .leftJoinAndSelect('lecture-review.certifiedImage', 'certifiedImage')
+      .where('lecture-review.review_id = :id', { id })
+      .getOne();
+
+    return result;
   }
 }
