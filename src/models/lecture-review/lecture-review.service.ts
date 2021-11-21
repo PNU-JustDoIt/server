@@ -81,4 +81,38 @@ export class LectureReviewService {
 
     return result;
   }
+
+  /**
+   * 리뷰 단건 삭제
+   * @param user_id
+   * @param review_id
+   * @returns
+   */
+  async deleteMyReviewByUserIdAndReviewId(
+    user_id: number,
+    review_id: number,
+  ): Promise<any> {
+    console.log('user_id:', user_id);
+    console.log('review_id:', review_id);
+
+    const rawReview = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .where('lecture-review.user_id.user_id=:user_id', { user_id: user_id })
+      .where('lecture-review.review_id=:review_id', { review_id: review_id })
+      .getOne();
+
+    if (!rawReview) {
+      throw new Error(
+        `[deleteMyReviewByUserIdAndReviewId] There is no review with user_id ${user_id} and review_id ${review_id}.`,
+      );
+    } else {
+      try {
+        return await this.lectureReviewRepository.delete(rawReview);
+      } catch {
+        throw new Error(
+          `[deleteMyReviewByUserIdAndReviewId] Failed to delete a review with user_id of ${user_id} and review_id of ${review_id}.`,
+        );
+      }
+    }
+  }
 }

@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { LectureReviewService } from './lecture-review.service';
 import { CreateLectureReviewReq } from './dto/create-lecture-review.dto';
 import { LectureReview } from './entities/lecture-review.entity';
@@ -17,5 +25,22 @@ export class LectureReviewController {
     @Body() reviewData: CreateLectureReviewReq,
   ): Promise<LectureReview> {
     return this.lectureReviewService.createLectureReview(reviewData);
+  }
+
+  /**
+   * 리뷰 단건 삭제
+   * @param user_id
+   * @param review_id
+   * @returns
+   */
+  @Delete('delete-review/:user_id/:review_id')
+  async deleteMyReviewByUserIdAndReviewId(
+    @Query('user_id') user_id: number,
+    @Query('review_id') review_id: number,
+  ): Promise<any> {
+    return await this.lectureReviewService.deleteMyReviewByUserIdAndReviewId(
+      user_id,
+      review_id,
+    );
   }
 }
