@@ -94,7 +94,7 @@ export class LectureReviewService {
     const result = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
-      .where('lecture_id.lecature_category = :name', {name })
+      .where('lecture_id.lecature_category = :name', { name })
       .getMany();
     return result;
   }
@@ -103,7 +103,7 @@ export class LectureReviewService {
     const result = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
-      .where('lecture_id.lecture_liberal_category = :name', {name})
+      .where('lecture_id.lecture_liberal_category = :name', { name })
       .getMany();
     return result;
   }
@@ -111,7 +111,7 @@ export class LectureReviewService {
   async findAllReview() {
     const result = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
-      .leftJoinAndSelect('lecture-review.lecture_id','lecture_id')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
       .getMany();
 
     return result;
@@ -154,6 +154,7 @@ export class LectureReviewService {
     const rawReviews = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture')
+      .leftJoinAndSelect('lecture-review.user_id', 'user')
       .getMany();
 
     return rawReviews;
