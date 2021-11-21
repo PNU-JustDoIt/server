@@ -46,7 +46,6 @@ export class LectureReviewController {
 
   @Post('get-reviews')
   async getReviews(): Promise<any> {
-    console.log('adsfasdf1');
     return await this.lectureReviewService.getReviews();
   }
 }

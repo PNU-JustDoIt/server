@@ -119,7 +119,7 @@ export class LectureReviewService {
   async getReviews(): Promise<any> {
     const rawReviews = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
-      .select()
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture')
       .getMany();
 
     return rawReviews;
