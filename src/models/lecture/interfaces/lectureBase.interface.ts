@@ -1,4 +1,3 @@
-
 /* 
 name : lecture interface 
 description : lecture entity와 관련된 interface

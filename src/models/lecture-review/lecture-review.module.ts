@@ -1,6 +1,5 @@
 import { CertifiedImageModule } from './../certified-image/certified-image.module';
 import { UserModule } from './../user/user.module';
-import { CertifiedImage } from 'src/models/certified-image/entities/certified-image.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { LectureReview } from './entities/lecture-review.entity';
