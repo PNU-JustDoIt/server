@@ -115,4 +115,13 @@ export class LectureReviewService {
       }
     }
   }
+
+  async getReviews(): Promise<any> {
+    const rawReviews = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .select()
+      .getMany();
+
+    return rawReviews;
+  }
 }
