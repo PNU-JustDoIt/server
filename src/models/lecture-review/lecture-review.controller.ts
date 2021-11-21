@@ -2,7 +2,6 @@ import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { LectureReviewService } from './lecture-review.service';
 import { CreateLectureReviewReq } from './dto/create-lecture-review.dto';
 import { LectureReview } from './entities/lecture-review.entity';
-import { LectureService } from '../lecture/lecture.service';
 
 @Controller('lecture-review')
 export class LectureReviewController {

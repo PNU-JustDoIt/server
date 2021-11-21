@@ -9,7 +9,6 @@ export class NaverSensController {
   async sendSMS(
     @Body('user_phone') user_phone: string,
   ): Promise<string | null> {
-    console.log('asdfasdf', user_phone);
     return await this.naverSensService.sendSMS(user_phone);
   }
 }
