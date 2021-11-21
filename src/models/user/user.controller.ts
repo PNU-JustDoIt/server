@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ChangeUserNicknameReq } from './dto/change-user-nickname-req.dto';
 import { ChangeUserPasswordReq } from './dto/change-user-password-req.dto';
@@ -25,7 +26,7 @@ export class UserController {
    * @returns MyReviewRes[]
    */
   @Get('get-my-review')
-  async getMyReview(@Body('user_id') user_id: number): Promise<MyReviewRes[]> {
+  async getMyReview(@Query('user_id') user_id: number): Promise<MyReviewRes[]> {
     return await this.userService.getMyReview(user_id);
   }
 
