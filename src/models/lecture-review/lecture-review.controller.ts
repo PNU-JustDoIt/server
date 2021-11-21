@@ -19,4 +19,19 @@ export class LectureReviewController {
   ): Promise<LectureReview> {
     return this.lectureReviewService.createLectureReview(reviewData);
   }
+
+  @Get('department/:id')
+  async findByDepartmentName(@Param('id') id:string) {
+    return this.lectureReviewService.findByDepartmentName(id);
+  }
+
+  @Get('category/:id')
+  async findByLectureCategory(@Param('id') id:string) {
+    return this.lectureReviewService.findByLectureCategory(id);
+  }
+
+  @Get('liberal/:id')
+  async findByLectureLiberal(@Param('id') id:string) {
+    return this.lectureReviewService.findByLectureLiberal(id);
+  }
 }
