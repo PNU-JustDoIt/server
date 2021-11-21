@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { LectureReview } from '../lecture-review/entities/lecture-review.entity';
+import { Lecture } from '../lecture/entities/lecture.entity';
 import { ChangeUserNicknameReq } from './dto/change-user-nickname-req.dto';
 import { ChangeUserPasswordReq } from './dto/change-user-password-req.dto';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
 import { DeleteUserRes } from './dto/delete-user-res.dto';
+import { MyReviewRes } from './dto/my-review-res.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -13,7 +16,49 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(LectureReview)
+    private readonly lecture: Repository<Lecture>,
+
+    @InjectRepository(LectureReview)
+    private readonly lectureReviewRepository: Repository<LectureReview>,
   ) {}
+
+  /**
+   * 나의 후기 전체 조회
+   * @param user_id
+   * @returns MyReviewRes[]
+   */
+  async getMyReview(user_id: number): Promise<MyReviewRes[]> {
+    const rawMyReviewList = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.user_id', 'user')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture')
+      .where('lecture-review.user_id.user_id=:user_id', { user_id: user_id })
+      .getMany();
+
+    const myReviewList: MyReviewRes[] = rawMyReviewList.map((each) => {
+      return {
+        review_id: each.review_id,
+        lecture_name: each.lecture_id.lecture_name,
+        professor_name: each.lecture_id.lecture_professor_name,
+        lecture_category: each.lecture_id.lecature_category,
+        lecture_grade: each.lecture_id.lecture_grade,
+        lecture_theory: each.lecture_id.lecture_theory,
+        lecture_training: each.lecture_id.lecture_training,
+        review_is_report: each.review_is_report,
+        review_is_team_project: each.review_is_team_project,
+        review_main_test_count: each.review_main_test_count,
+        review_sub_test_count: each.review_sub_test_count,
+        review_test_category: each.review_test_category,
+        review_description: each.review_description,
+        review_difficulty: each.review_difficulty,
+        review_using_books: each.review_using_books,
+      };
+    });
+
+    return myReviewList;
+  }
 
   /**
    * Local User 생성

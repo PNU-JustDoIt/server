@@ -12,11 +12,22 @@ import { ChangeUserPasswordReq } from './dto/change-user-password-req.dto';
 import { CreateUserReq } from './dto/create-user-req.dto';
 import { CreateUserRes } from './dto/create-user-res.dto';
 import { DeleteUserRes } from './dto/delete-user-res.dto';
+import { MyReviewRes } from './dto/my-review-res.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  /**
+   * 나의 후기 전체 조회
+   * @param user_id
+   * @returns MyReviewRes[]
+   */
+  @Get('get-my-review')
+  async getMyReview(@Body('user_id') user_id: number): Promise<MyReviewRes[]> {
+    return await this.userService.getMyReview(user_id);
+  }
 
   /**
    * Local User 생성
