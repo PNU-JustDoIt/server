@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './models/auth/auth.module';
+import { LectureModule } from './models/lecture/lecture.module';
 import { NaverSensModule } from './models/naver-sens/naver-sens.module';
 import { UserModule } from './models/user/user.module';
 import { CertifiedImageModule } from './models/certified-image/certified-image.module';

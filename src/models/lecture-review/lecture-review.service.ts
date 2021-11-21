@@ -81,7 +81,41 @@ export class LectureReviewService {
 
     return result;
   }
+  async findByDepartmentName(name: string) {
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
+      .where('lecture_id.lecture_department_name = :name', { name })
+      .getMany();
+    return result;
+  }
+  async findByLectureCategory(name: string) {
+    //const name='일반선택';
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
+      .where('lecture_id.lecature_category = :name', {name })
+      .getMany();
+    return result;
+  }
 
+  async findByLectureLiberal(name: string) {
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
+      .where('lecture_id.lecture_liberal_category = :name', {name})
+      .getMany();
+    return result;
+  }
+
+  async findAllReview() {
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id','lecture_id')
+      .getMany();
+
+    return result;
+  }
   /**
    * 리뷰 단건 삭제
    * @param user_id
