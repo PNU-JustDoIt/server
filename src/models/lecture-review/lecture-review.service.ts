@@ -114,6 +114,6 @@ export class LectureReviewService {
       .leftJoinAndSelect('lecture-review.lecture_id','lecture_id')
       .getMany();
 
-    return result
+    return result;
   }
 }
