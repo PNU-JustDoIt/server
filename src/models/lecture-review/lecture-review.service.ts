@@ -105,5 +105,15 @@ export class LectureReviewService {
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
       .where('lecture_id.lecture_liberal_category = :name', {name})
       .getMany();
+    return result;
+  }
+
+  async findAllReview() {
+    const result = await this.lectureReviewRepository
+      .createQueryBuilder('lecture-review')
+      .leftJoinAndSelect('lecture-review.lecture_id','lecture_id')
+      .getMany();
+
+    return result
   }
 }

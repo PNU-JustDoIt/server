@@ -33,4 +33,9 @@ export class LectureReviewController {
   async findByLectureLiberal(@Param('id') id:string) {
     return this.lectureReviewService.findByLectureLiberal(id);
   }
+
+  @Get('review')
+  async findAllReview() {
+    return this.lectureReviewService.findAllReview();
+  }
 }
