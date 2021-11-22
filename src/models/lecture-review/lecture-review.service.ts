@@ -198,6 +198,7 @@ export class LectureReviewService {
     const rawReviews = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture')
+      .leftJoinAndSelect('lecture-review.user_id', 'user')
       .getMany();
 
     const reviews: MyReviewRes[] = rawReviews.map((each) => {
