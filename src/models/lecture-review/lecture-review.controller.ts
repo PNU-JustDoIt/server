@@ -10,6 +10,7 @@ import {
 import { LectureReviewService } from './lecture-review.service';
 import { CreateLectureReviewReq } from './dto/create-lecture-review.dto';
 import { LectureReview } from './entities/lecture-review.entity';
+import { MyReviewRes } from '../user/dto/my-review-res.dto';
 
 @Controller('lecture-review')
 export class LectureReviewController {
@@ -28,17 +29,17 @@ export class LectureReviewController {
   }
 
   @Get('department/:id')
-  async findByDepartmentName(@Param('id') id:string) {
+  async findByDepartmentName(@Param('id') id: string) {
     return this.lectureReviewService.findByDepartmentName(id);
   }
 
   @Get('category/:id')
-  async findByLectureCategory(@Param('id') id:string) {
+  async findByLectureCategory(@Param('id') id: string) {
     return this.lectureReviewService.findByLectureCategory(id);
   }
 
   @Get('liberal/:id')
-  async findByLectureLiberal(@Param('id') id:string) {
+  async findByLectureLiberal(@Param('id') id: string) {
     return this.lectureReviewService.findByLectureLiberal(id);
   }
 
@@ -64,7 +65,7 @@ export class LectureReviewController {
   }
 
   @Post('get-reviews')
-  async getReviews(): Promise<any> {
+  async getReviews(): Promise<MyReviewRes[]> {
     return await this.lectureReviewService.getReviews();
   }
 }

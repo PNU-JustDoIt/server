@@ -9,6 +9,7 @@ import { CreateLectureReviewReq } from './dto/create-lecture-review.dto';
 import { LectureReview } from './entities/lecture-review.entity';
 
 import { FindLectureReviewDetail } from './dto/find-lecture-review-detail.dto';
+import { MyReviewRes } from '../user/dto/my-review-res.dto';
 
 @Injectable()
 export class LectureReviewService {
@@ -82,20 +83,63 @@ export class LectureReviewService {
     return result;
   }
   async findByDepartmentName(name: string) {
-    const result = await this.lectureReviewRepository
+    const rawResult = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
       .where('lecture_id.lecture_department_name = :name', { name })
       .getMany();
+
+    const result: MyReviewRes[] = rawResult.map((each) => {
+      return {
+        review_id: each.review_id,
+        lecture_name: each.lecture_id.lecture_name,
+        professor_name: each.lecture_id.lecture_professor_name,
+        lecture_category: each.lecture_id.lecature_category,
+        lecture_grade: each.lecture_id.lecture_grade,
+        lecture_theory: each.lecture_id.lecture_theory,
+        lecture_training: each.lecture_id.lecture_training,
+        review_is_report: each.review_is_report,
+        review_is_team_project: each.review_is_team_project,
+        review_main_test_count: each.review_main_test_count,
+        review_sub_test_count: each.review_sub_test_count,
+        review_test_category: each.review_test_category,
+        review_description: each.review_description,
+        review_difficulty: each.review_difficulty,
+        review_using_books: each.review_using_books,
+      };
+    });
+
     return result;
   }
+
   async findByLectureCategory(name: string) {
     //const name='일반선택';
-    const result = await this.lectureReviewRepository
+    const rawResult = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
-      .where('lecture_id.lecature_category = :name', {name })
+      .where('lecture_id.lecature_category = :name', { name })
       .getMany();
+
+    const result: MyReviewRes[] = rawResult.map((each) => {
+      return {
+        review_id: each.review_id,
+        lecture_name: each.lecture_id.lecture_name,
+        professor_name: each.lecture_id.lecture_professor_name,
+        lecture_category: each.lecture_id.lecature_category,
+        lecture_grade: each.lecture_id.lecture_grade,
+        lecture_theory: each.lecture_id.lecture_theory,
+        lecture_training: each.lecture_id.lecture_training,
+        review_is_report: each.review_is_report,
+        review_is_team_project: each.review_is_team_project,
+        review_main_test_count: each.review_main_test_count,
+        review_sub_test_count: each.review_sub_test_count,
+        review_test_category: each.review_test_category,
+        review_description: each.review_description,
+        review_difficulty: each.review_difficulty,
+        review_using_books: each.review_using_books,
+      };
+    });
+
     return result;
   }
 
@@ -103,7 +147,7 @@ export class LectureReviewService {
     const result = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
-      .where('lecture_id.lecture_liberal_category = :name', {name})
+      .where('lecture_id.lecture_liberal_category = :name', { name })
       .getMany();
     return result;
   }
@@ -111,7 +155,7 @@ export class LectureReviewService {
   async findAllReview() {
     const result = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
-      .leftJoinAndSelect('lecture-review.lecture_id','lecture_id')
+      .leftJoinAndSelect('lecture-review.lecture_id', 'lecture_id')
       .getMany();
 
     return result;
@@ -150,12 +194,32 @@ export class LectureReviewService {
     }
   }
 
-  async getReviews(): Promise<any> {
+  async getReviews(): Promise<MyReviewRes[]> {
     const rawReviews = await this.lectureReviewRepository
       .createQueryBuilder('lecture-review')
       .leftJoinAndSelect('lecture-review.lecture_id', 'lecture')
       .getMany();
 
-    return rawReviews;
+    const reviews: MyReviewRes[] = rawReviews.map((each) => {
+      return {
+        review_id: each.review_id,
+        lecture_name: each.lecture_id.lecture_name,
+        professor_name: each.lecture_id.lecture_professor_name,
+        lecture_category: each.lecture_id.lecature_category,
+        lecture_grade: each.lecture_id.lecture_grade,
+        lecture_theory: each.lecture_id.lecture_theory,
+        lecture_training: each.lecture_id.lecture_training,
+        review_is_report: each.review_is_report,
+        review_is_team_project: each.review_is_team_project,
+        review_main_test_count: each.review_main_test_count,
+        review_sub_test_count: each.review_sub_test_count,
+        review_test_category: each.review_test_category,
+        review_description: each.review_description,
+        review_difficulty: each.review_difficulty,
+        review_using_books: each.review_using_books,
+      };
+    });
+
+    return reviews;
   }
 }
